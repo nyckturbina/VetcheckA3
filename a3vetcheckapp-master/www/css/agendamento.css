@@ -1,0 +1,178 @@
+/* full client block used in lists and inside appointment blocks */
+.client-full{margin-top:8px;border-radius:10px;background:linear-gradient(180deg,#f0f9ff,#f8fafc);padding:8px;border:1px solid rgba(37,99,235,0.08)}
+.client-field{margin-bottom:8px}
+.client-label{font-weight:700;font-size:12px;color:#2563eb;margin-bottom:4px}
+.client-value{font-size:13px;color:#0f172a;white-space:pre-wrap}
+.appt-block .client-full{max-height:90px;overflow:auto;padding:6px;margin-top:6px}
+/* Simple styles for agendamento.html */
+:root{
+  --bg: linear-gradient(135deg, #f5f7fb 0%, #eef2f7 100%);
+  --card: #ffffff;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --accent: #10b981;
+  --accent-dark: #059669;
+  --shadow-sm: 0 2px 8px rgba(15,23,42,0.04);
+  --shadow-md: 0 8px 20px rgba(15,23,42,0.08);
+  --shadow-lg: 0 16px 40px rgba(15,23,42,0.12);
+}
+html,body{height:100%;margin:0;font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;background:var(--bg);color:#0f172a}
+#app{max-width:1200px;margin:0 auto;padding:12px}
+.view{background:var(--card);border-radius:20px;padding:18px;box-shadow:var(--shadow-md);margin-bottom:16px;border:1px solid rgba(255,255,255,0.8)}
+.hidden{display:none}
+h2{margin:0 0 14px 0;font-size:20px;font-weight:700}
+h3{margin:16px 0 12px 0;font-size:16px;font-weight:600}
+#form-controls input[type=text], #form-controls input[type=email], #form-controls input[type=tel], #form-controls input[type=password], #form-controls input[type=number], #form-controls input[type=date], #form-controls input[type=time], #form-controls select, #form-controls textarea{
+  width:100%;padding:14px 14px;border-radius:14px;border:2px solid #eef2f7;background:#fff;margin:12px 0;font-size:16px;color:#0f172a;transition:all 0.3s
+}
+#form-controls input:focus, #form-controls select:focus, #form-controls textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,0.1);outline:none}
+textarea{min-height:120px;resize:vertical}
+button{display:inline-block;padding:14px 18px;border-radius:12px;border:none;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;font-size:16px;transition:all 0.3s;box-shadow:0 4px 12px rgba(37,99,235,0.25)}
+button:hover{background:var(--primary-dark);box-shadow:0 6px 16px rgba(37,99,235,0.35);transform:translateY(-2px)}
+button:active{transform:scale(0.98)}
+button.button-outline{background:transparent;border:2px solid #d1d5db;color:var(--muted);box-shadow:none}
+button.button-outline:hover{background:#f9fafb;border-color:var(--muted)}
+.small{padding:12px 14px;font-size:15px;min-height:44px;display:flex;align-items:center;border-radius:12px}
+#petsList, #apptsList{list-style:none;padding:0;margin:12px 0}
+#petsList li, #apptsList li{padding:14px;border-radius:14px;background:linear-gradient(135deg,#fbfdff 0%,#f8fafc 100%);border:2px solid #eef2ff;margin-bottom:10px;font-size:15px;box-shadow:var(--shadow-sm);transition:all 0.3s}
+#petsList li:hover, #apptsList li:hover{border-color:var(--primary);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+
+#todayAgendaContainer{margin:12px 0 18px 0}
+#todayAgenda{list-style:none;padding:0;margin:0}
+#todayAgenda li{padding:14px;border-radius:14px;background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);border:2px solid #eef2ff;margin-bottom:10px;font-size:15px;display:flex;align-items:center;gap:12px;min-height:56px;box-shadow:var(--shadow-sm);transition:all 0.3s}
+#todayAgenda li:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+
+/* highlight the next upcoming appointment */
+#todayAgenda li.next-appt{border-color:var(--accent);box-shadow:0 8px 20px rgba(16,185,129,0.15);transform:translateY(-2px);background:linear-gradient(135deg,#f0fdf4 0%,#f8fafc 100%)}
+
+/* New layout styles for weekly agenda */
+.layout{display:flex;gap:20px;align-items:flex-start}
+.sidebar{width:320px;min-width:320px}
+.main-area{flex:1;min-width:0}
+.mini-calendar{background:var(--card);padding:14px;border-radius:16px;margin-bottom:14px;box-shadow:var(--shadow-sm);border:1px solid rgba(255,255,255,0.8)}
+.mc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mc-header button{padding:8px 12px;font-size:16px;min-width:44px;min-height:44px;border-radius:10px;background:var(--primary);color:#fff}
+#mcGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.mc-day{padding:10px;text-align:center;border-radius:10px;font-size:14px;min-height:44px;display:flex;align-items:center;justify-content:center;transition:all 0.3s;cursor:pointer;border:2px solid transparent}
+.mc-day:hover{background:#f0f4f9;border-color:#e0e7ff}
+.mc-day.today{background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(245,158,11,0.3)}
+.mc-day.has-appt{background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(16,185,129,0.3)}
+.mc-day.today.has-appt{background:linear-gradient(135deg,#f59e0b,#10b981);box-shadow:0 4px 12px rgba(245,158,11,0.3), 0 4px 12px rgba(16,185,129,0.3)}
+.professionals{background:var(--card);padding:14px;border-radius:16px;box-shadow:var(--shadow-sm);border:1px solid rgba(255,255,255,0.8)}
+.professionals h4{margin:0 0 12px 0;font-size:15px;font-weight:700}
+.professionals ul{list-style:none;padding:0;margin:0}
+.professionals li{display:flex;align-items:center;gap:10px;padding:10px 10px;font-size:14px;border-radius:10px;transition:all 0.3s;cursor:pointer}
+.professionals li:hover{background:#f9fafb}
+.prof-color{width:14px;height:14px;border-radius:6px;display:inline-block;flex-shrink:0;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;flex-wrap:wrap}
+.left-controls, .right-controls{display:flex;gap:8px}
+.left-controls button, .right-controls button{padding:10px 12px;font-size:15px;min-height:44px;border-radius:10px}
+.week-wrapper{overflow:auto;border-radius:16px;margin-bottom:16px;box-shadow:var(--shadow-md)}
+.week-grid{display:grid;grid-template-columns:90px repeat(7,1fr);background:#fff;border:2px solid #e6edf3;border-radius:16px;overflow:hidden}
+.week-grid .time-col{background:linear-gradient(180deg,#fbfdff,#f8fafc);border-right:2px solid #eef2ff;padding:10px;min-width:90px;font-size:13px;font-weight:600}
+.week-grid .time-cell, .week-grid .day-cell{padding:10px;border-bottom:1px solid #f1f5f9;min-height:60px;position:relative;font-size:14px}
+.week-grid .day-cell{background:linear-gradient(180deg,#ffffff,#fbfdff);transition:all 0.3s}
+.week-grid .day-cell:hover{background:#f9fafb}
+.week-grid .day-header{background:linear-gradient(180deg,#f7fafc,#f1f5f9);padding:12px 10px;border-bottom:2px solid #e6edf3;border-left:2px solid #eef2ff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700}
+.week-grid .day-header .weekday{font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.week-grid .day-header .date{font-size:14px}
+
+.appt-block{background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);color:#0f172a;padding:12px;border-radius:12px;font-size:14px;margin-bottom:8px;border-left:5px solid rgba(37,99,235,0.9);box-shadow:0 4px 12px rgba(15,23,42,0.08);display:block;min-height:50px;transition:all 0.3s;z-index:100}
+.appt-block:hover{box-shadow:0 12px 28px rgba(15,23,42,0.16);transform:translateY(-4px);z-index:101}
+.appt-block .meta{font-size:12px;color:var(--muted);opacity:0.85;margin-top:6px;font-weight:500}
+.appt-block .type-badge{display:inline-block;background:linear-gradient(135deg,rgba(37,99,235,0.1),rgba(37,99,235,0.05));color:var(--primary);padding:4px 10px;border-radius:20px;font-size:11px;margin-left:8px;font-weight:600;border:1px solid rgba(37,99,235,0.2)}
+/* Anamnesis related styles */
+.anam-summary{font-size:12px;color:#374151;margin-top:8px;background:rgba(15,23,42,0.02);padding:8px 10px;border-radius:8px;border:1px solid rgba(15,23,42,0.04)}
+.appt-block.has-anamnesis{box-shadow:0 8px 20px rgba(16,185,129,0.06);border-left-color:#10b981}
+.appt-block .anam-inline{font-size:11px;color:#374151;margin-top:6px;opacity:0.95}
+.appt-block .anam-badge{position:absolute;right:6px;top:6px;width:10px;height:10px;border-radius:50%;background:#10b981;box-shadow:0 2px 6px rgba(16,185,129,0.25);border:2px solid #fff;z-index:120}
+/* full anamnesis block used in lists and inside appointment blocks */
+.anam-full{margin-top:8px;border-radius:10px;background:linear-gradient(180deg,#fbfdff,#f8fafc);padding:8px;border:1px solid rgba(15,23,42,0.04)}
+.anam-field{margin-bottom:8px}
+.anam-label{font-weight:700;font-size:12px;color:#374151;margin-bottom:4px}
+.anam-value{font-size:13px;color:#0f172a;white-space:pre-wrap}
+.appt-block .anam-full{max-height:120px;overflow:auto;padding:6px;margin-top:6px}
+/* highlighted block for next appointment */
+.week-grid .appt-block.next-appt{outline:3px solid rgba(16,185,129,0.15);box-shadow:0 10px 28px rgba(16,185,129,0.12);transform:translateY(-2px);border-left-color:var(--accent);background:linear-gradient(135deg,#f0fdf4,#f8fafc)}
+
+/* subtle current day column highlight */
+.week-grid .day-cell.today-col{background:linear-gradient(180deg,#fffdf8,#fcfff6)}
+
+/* now indicator line */
+.now-indicator{position:absolute;height:3px;background:linear-gradient(90deg,rgba(239,68,68,0.9),rgba(249,115,22,0.95));box-shadow:0 4px 18px rgba(239,68,68,0.15);z-index:60;border-radius:2px}
+
+/* appointment block adjustments for absolute layout */
+.week-grid .appt-block{position:absolute;left:0;top:0;overflow:hidden}
+.week-grid .appt-block .meta{font-size:12px;color:var(--muted);margin-top:6px}
+.week-grid .appt-block .type-badge{display:inline-block;background:rgba(15,23,42,0.06);padding:2px 8px;border-radius:999px;font-size:11px;margin-left:8px}
+
+@media(max-width:1024px){
+  .layout{gap:16px}
+  .sidebar{width:280px}
+  .week-grid{grid-template-columns:80px repeat(7,1fr)}
+}
+
+@media(max-width:768px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%}
+  #app{padding:10px;margin:0}
+  .view{padding:14px;margin-bottom:12px}
+  h2{font-size:18px}
+  h3{font-size:15px}
+  button{font-size:15px;padding:12px 16px}
+  .small{font-size:14px;padding:10px 12px}
+  #form-controls input, #form-controls select, #form-controls textarea{font-size:16px;padding:12px}
+  .form-row{flex-direction:column}
+  .form-row .col{margin-bottom:10px}
+  .topbar{flex-direction:column;align-items:stretch}
+  .left-controls, .right-controls, .center-title{width:100%;justify-content:center}
+  .week-grid{grid-template-columns:70px repeat(7,1fr);font-size:13px}
+  .week-grid .day-header{padding:8px 6px;font-size:12px}
+  .week-grid .day-header .weekday{font-size:11px}
+  .appt-block{font-size:12px;padding:8px;min-height:40px}
+}
+
+@media(max-width:480px){
+  #app{padding:8px;margin:0}
+  .view{padding:12px;margin-bottom:10px;border-radius:10px}
+  h2{font-size:17px;margin-bottom:12px}
+  h3{font-size:14px;margin:12px 0 10px 0}
+  button, .small{font-size:14px;padding:12px 14px;min-height:48px;width:100%}
+  #form-controls input, #form-controls select, #form-controls textarea{font-size:16px;padding:12px 10px;margin:10px 0}
+  .mc-day{font-size:13px;min-height:40px;padding:6px}
+  .professionals li{font-size:13px;padding:8px}
+  .week-grid{grid-template-columns:60px repeat(7,1fr);font-size:12px}
+  .week-grid .day-cell, .week-grid .time-cell{padding:6px;min-height:50px}
+  .week-grid .day-header{padding:6px 4px}
+  .week-grid .day-header .weekday{font-size:10px}
+  .appt-block{font-size:11px;padding:6px;margin-bottom:4px}
+  #todayAgenda li{padding:12px;font-size:14px;min-height:50px}
+  .view-header{flex-direction:column !important;align-items:flex-start !important;gap:10px !important}
+  .view-header div{width:100%;display:flex;gap:8px}
+  .view-header div button{flex:1}
+}
+.form-row{display:flex;gap:8px}
+.form-row .col{flex:1}
+.block{margin-bottom:12px}
+.section{margin-top:12px}
+.auth-note{color:var(--muted);font-size:13px;margin-top:6px}
+
+/* inline error styles */
+.input-error{border-color:#ef4444 !important; box-shadow:0 0 0 3px rgba(239,68,68,0.1) !important}
+.error-text{color:#ef4444;font-size:13px;margin-top:6px;font-weight:600}
+
+/* overlay/modal styles for the scheduler form */
+.view.overlayed{position:fixed;left:20px;right:20px;top:80px;bottom:80px;z-index:220;overflow:auto;padding:20px;border-radius:20px;box-shadow:0 24px 80px rgba(2,6,23,0.2);border:1px solid rgba(255,255,255,0.9)}
+.scheduler-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.32);z-index:210;backdrop-filter:blur(4px)}
+.view-header button{vertical-align:middle}
+
+@media(max-width:740px){
+  #app{padding:12px;margin:10px}
+  .form-row{flex-direction:column}
+  button{width:100%}
+}
+
+/* bottom action bar removed — buttons now live inside the form */
+.bottom-bar{display:none}

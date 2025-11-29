@@ -1,0 +1,157 @@
+<!-- www/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+  <title>VetAgenda</title>
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/agendamento.css" />
+</head>
+<body>
+  <div id="app">
+    <div class="layout">
+      <!-- Left sidebar: month calendar + professionals -->
+      <aside class="sidebar">
+        <div class="mini-calendar">
+          <div class="mc-header">
+            <button id="mcPrev">‹</button>
+            <div id="mcMonthYear">NOVEMBRO 2025</div>
+            <button id="mcNext">›</button>
+          </div>
+          <div id="mcGrid"></div>
+        </div>
+
+        <div class="professionals">
+          <h4>Profissionais</h4>
+          <ul id="professionalsList"></ul>
+        </div>
+      </aside>
+
+      <!-- Main content: header + week grid + controls + forms -->
+      <main class="main-area">
+        <div class="topbar">
+          <div class="left-controls">
+            <button id="weekPrev">◀</button>
+            <button id="todayBtn">Hoje</button>
+            <button id="weekNext">▶</button>
+          </div>
+          <div class="center-title" id="weekTitle">Semana</div>
+          <div class="right-controls">
+            <button id="refreshBtn">⟳</button>
+            <button id="printBtn">🖨</button>
+            <button id="openSchedulerBtn" class="small">Cadastrar agendamento</button>
+          </div>
+        </div>
+
+        <div class="week-wrapper">
+          <div id="weekGrid" class="week-grid"></div>
+        </div>
+
+        <section id="dashboardView" class="view hidden">
+          <div class="view-header" style="display:flex;align-items:center;justify-content:space-between">
+            <h2 style="margin:0">Olá, <span id="userName"></span></h2>
+            <div>
+              <button id="btnLogout">Sair</button>
+              <button id="closeSchedulerBtn" class="small button-outline" style="margin-left:8px">Fechar</button>
+            </div>
+          </div>
+
+          <div id="todayAgendaContainer" style="margin-top:8px">
+            <h3>Agenda do Dia</h3>
+            <ul id="todayAgenda"></ul>
+          </div>
+          <!-- Client/profile data: required to create appointments -->
+            <hr/>
+            <h3>Dados do cliente</h3>
+            <div class="block">
+              <div class="form-row">
+                <div class="col"><input id="regName" placeholder="Nome completo" /></div>
+                <div class="col"><input id="regEmail" placeholder="E-mail" type="email" /></div>
+              </div>
+              <div class="form-row">
+                <div class="col"><input id="regPhone" placeholder="Telefone" type="tel" /></div>
+                <div class="col">
+                  <input id="regCpf" placeholder="CPF" />
+                  <div id="cpfError" class="error-text" aria-live="polite"></div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col"><input id="regAddress" placeholder="Endereço (rua, número, cidade)" /></div>
+              </div>
+              <!-- 'Salvar cliente' button removed per request -->
+            </div>
+
+            <hr/>
+            <h3>Pets</h3>
+          <div>
+            <input id="petName" placeholder="Nome" />
+            <input id="petSpecies" placeholder="Espécie" />
+            <input id="petBreed" placeholder="Raça" />
+            <input id="petAge" type="number" placeholder="Idade" />
+            <input id="petWeight" type="number" step="0.1" placeholder="Peso (kg)" />
+          </div>
+          <ul id="petsList"></ul>
+
+          <hr/>
+          <h3>Agendar consulta</h3>
+          <div id="form-controls">
+            <select id="apptPet"></select>
+            <input id="apptDate" type="date" />
+            <input id="apptTime" type="time" />
+            <input id="apptType" placeholder="Tipo (vacina, rotina...)" />
+            <select id="apptDuration" aria-label="Duração">
+              <option value="15">15 min</option>
+              <option value="20" selected>20 min</option>
+              <option value="30">30 min</option>
+              <option value="45">45 min</option>
+              <option value="60">60 min</option>
+            </select>
+            <input id="apptVet" placeholder="Veterinário" />
+            <textarea id="apptNotes" placeholder="Observações"></textarea>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <button id="btnSchedule" class="small">Agendar consulta</button>
+              <button id="btnAddAppt" class="button-outline small">Salvar rascunho</button>
+            </div>
+          </div>
+          <ul id="apptsList"></ul>
+
+          <hr/>
+          <h3>Anamnese</h3>
+          <div>
+            <select id="anamAppt"></select>
+            <textarea id="chiefComplaint" placeholder="Queixa principal"></textarea>
+            <textarea id="history" placeholder="Histórico"></textarea>
+            <textarea id="physicalExam" placeholder="Exame físico"></textarea>
+            <textarea id="diagnosticHypotheses" placeholder="Hipóteses diagnósticas"></textarea>
+            <textarea id="plan" placeholder="Conduta"></textarea>
+            <p id="anamMsg"></p>
+          </div>
+        </section>
+        <!-- bottom action bar removed; schedule button is inside the form -->
+      </main>
+    </div>
+  </div>
+
+  <script src="cordova.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+  <script src="js/db.js"></script>
+  <!-- Firebase SDK for cloud data sync (compat build exposes window.firebase used by clouddb.js) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="js/clouddb.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pets.js"></script>
+  <script src="js/appointments.js"></script>
+  <script src="js/anamnesis.js"></script>
+  <script src="js/app.js"></script>
+  
+  <script>
+    // Verificação de autenticação
+    if (!localStorage.getItem('vetuser')) {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

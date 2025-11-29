@@ -1,0 +1,36 @@
+/* Firebase Setup Instructions */
+1. Go to https://firebase.google.com and create a new project (free tier)
+2. Enable Firestore Database (select 'Start in test mode' for development)
+3. Enable Email/Password authentication in Firebase Console
+4. Copy your Firebase config from Project Settings
+5. Replace the firebaseConfig object in www/js/clouddb.js with your real config
+
+/* Firestore Security Rules (set in Firebase Console) */
+Copy and paste the following security rules into Firestore:
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read/write for authenticated users on their own collections
+    match /users/{uid} {
+      allow read, write: if request.auth.uid == uid;
+      
+      match /pets/{petId} {
+        allow read, write: if request.auth.uid == uid;
+      }
+      
+      match /appointments/{apptId} {
+        allow read, write: if request.auth.uid == uid;
+      }
+      
+      match /anamnesis/{anamId} {
+        allow read, write: if request.auth.uid == uid;
+      }
+    }
+  }
+}
+
+/* Features Enabled */
+- Email/Password Authentication
+- Firestore Database
+- Cloud Storage (optional, for file attachments in future)

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>VetCheck</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="framework7-bundle.min.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Statusbar -->
+    <div class="statusbar"></div>
+<script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+    <!-- Main view -->
+    <div class="view view-main">
+      <div class="page" data-name="home">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="title">
+        </div>
+        <div class="page" data-name="appointments">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title"></div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block">
+             
+            </div>
+            <div class="list media-list">
+              <ul id="appointmentsList">
+                <!-- itens serão inseridos dinamicamente -->
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="login-card">
+            <div class="brand">
+              <div class="brand-logo">VA</div>
+              <div>
+                <div class="login-title">Bem-vindo ao VetCheck</div>
+                <div class="login-sub">Entre com sua conta para acessar a agenda</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="loginEmail">E-mail</label>
+              <input type="email" id="loginEmail" placeholder="Digite seu e-mail">
+            </div>
+            <div class="form-row">
+              <label for="loginPassword">Senha</label>
+              <input type="password" id="loginPassword" placeholder="Digite sua senha">
+            </div>
+            <div class="actions">
+              <button class="button-fill" id="btnLogin">Entrar</button>
+              <button class="button-outline" id="btnRegister">Registrar</button>
+            </div>
+            <div class="helper">Esqueceu a senha? Entre em contato com o suporte.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="framework7-bundle.min.js"></script>
+  <script src="cordova.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/f7-init.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
