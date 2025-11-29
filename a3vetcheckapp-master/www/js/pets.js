@@ -1,34 +1,50 @@
-// Pets helper: create table, add pet, list pets for current user
+// Pets helper usando Supabase
 (function(){
-  async function init(){
-    const sql = `CREATE TABLE IF NOT EXISTS pets (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      species TEXT,
-      breed TEXT,
-      age INTEGER,
-      weight REAL,
-      owner_id INTEGER NOT NULL
-    )`;
-    try{ await DB.execute(sql); }catch(e){ console.warn('pets init', e); }
-  }
 
+  // Cadastrar um novo pet
   async function addPet(data){
-    // data: {name,species,breed,age,weight,owner_id}
-    const params = [data.name, data.species, data.breed, data.age||null, data.weight||null, data.owner_id];
-    const res = await DB.execute(`INSERT INTO pets (name,species,breed,age,weight,owner_id) VALUES (?,?,?,?,?,?)`, params);
-    return res;
+    // data: {name, species, breed, age, weight, owner_id}
+    
+    const { data: result, error } = await supabase
+      .from("pets")
+      .insert({
+        name: data.name,
+        species: data.species,
+        breed: data.breed,
+        age: data.age || null,
+        weight: data.weight || null,
+        owner_id: data.owner_id
+      })
+      .select()
+      .single();
+
+    if(error) throw error;
+
+    return result;
   }
 
+  // Listar pets do dono
   async function listPetsByOwner(owner_id){
-    const rows = await DB.query(`SELECT * FROM pets WHERE owner_id = ?`, [owner_id]);
-    return rows;
+    const { data, error } = await supabase
+      .from("pets")
+      .select("*")
+      .eq("owner_id", owner_id);
+
+    if(error) throw error;
+
+    return data;
   }
 
+  // Listar todos os pets (modo admin)
   async function listAllPets(){
-    const rows = await DB.query(`SELECT * FROM pets`, []);
-    return rows;
+    const { data, error } = await supabase
+      .from("pets")
+      .select("*");
+
+    if(error) throw error;
+
+    return data;
   }
 
-  window.Pets = { init, addPet, listPetsByOwner, listAllPets };
+  window.Pets = { addPet, listPetsByOwner, listAllPets };
 })();

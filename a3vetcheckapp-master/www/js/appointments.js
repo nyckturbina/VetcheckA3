@@ -1,47 +1,74 @@
-// Appointments helper: create table, add appointment, list appointments for owner
 (function(){
-  async function init(){
-    const sql = `CREATE TABLE IF NOT EXISTS appointments (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      pet_id INTEGER NOT NULL,
-      vet_name TEXT,
-      type TEXT,
-      date TEXT NOT NULL,
-      time TEXT NOT NULL,
-      duration INTEGER DEFAULT 20,
-      status TEXT DEFAULT 'agendado',
-      notes TEXT,
-      owner_id INTEGER
-    )`;
-    try{ await DB.execute(sql); }catch(e){ console.warn('appointments init', e); }
-    // add duration column if missing (silently ignore errors)
-    try{ await DB.execute('ALTER TABLE appointments ADD COLUMN duration INTEGER DEFAULT 20'); }catch(e){}
-  }
 
   async function addAppointment(appt){
-    // appt: {pet_id, vet_name, type, date, time, duration, status, notes, owner_id}
-    const params = [appt.pet_id, appt.vet_name, appt.type, appt.date, appt.time, appt.duration || 20, appt.status||'agendado', appt.notes||'', appt.owner_id||null];
-    const res = await DB.execute(`INSERT INTO appointments (pet_id, vet_name, type, date, time, duration, status, notes, owner_id) VALUES (?,?,?,?,?,?,?,?,?)`, params);
-    return res;
+    const { data, error } = await supabase
+      .from("appointments")
+      .insert({
+        pet_id: appt.pet_id,
+        vet_name: appt.vet_name,
+        type: appt.type,
+        date: appt.date,
+        time: appt.time,
+        duration: appt.duration || 20,
+        status: appt.status || 'agendado',
+        notes: appt.notes || '',
+        owner_id: appt.owner_id
+      })
+      .select()
+      .single();
+
+    if(error) throw error;
+
+    return data;
   }
 
   async function listAppointmentsByOwner(owner_id){
-    const rows = await DB.query(`SELECT * FROM appointments WHERE owner_id = ? ORDER BY date, time`, [owner_id]);
-    return rows;
+    const { data, error } = await supabase
+      .from("appointments")
+      .select("*")
+      .eq("owner_id", owner_id)
+      .order("date", { ascending: true })
+      .order("time", { ascending: true });
+
+    if(error) throw error;
+
+    return data;
   }
 
   async function listAllAppointments(){
-    const rows = await DB.query(`SELECT * FROM appointments ORDER BY date, time`, []);
-    return rows;
+    const { data, error } = await supabase
+      .from("appointments")
+      .select("*")
+      .order("date", { ascending: true })
+      .order("time", { ascending: true });
+
+    if(error) throw error;
+
+    return data;
   }
 
   async function updateAppointment(id, appt){
-    // appt: fields to update (pet_id, vet_name, type, date, time, duration, notes, status, owner_id)
-    const params = [appt.pet_id, appt.vet_name, appt.type, appt.date, appt.time, appt.duration || 20, appt.status||'agendado', appt.notes||'', appt.owner_id||null, id];
-    const sql = `UPDATE appointments SET pet_id=?, vet_name=?, type=?, date=?, time=?, duration=?, status=?, notes=?, owner_id=? WHERE id=?`;
-    const res = await DB.execute(sql, params);
-    return res;
+    const { data, error } = await supabase
+      .from("appointments")
+      .update({
+        pet_id: appt.pet_id,
+        vet_name: appt.vet_name,
+        type: appt.type,
+        date: appt.date,
+        time: appt.time,
+        duration: appt.duration || 20,
+        status: appt.status || 'agendado',
+        notes: appt.notes || '',
+        owner_id: appt.owner_id
+      })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if(error) throw error;
+
+    return data;
   }
 
-  window.Appointments = { init, addAppointment, listAppointmentsByOwner, listAllAppointments };
+  window.Appointments = { addAppointment, listAppointmentsByOwner, listAllAppointments, updateAppointment };
 })();
