@@ -38,13 +38,10 @@ A aplicação foi desenvolvida utilizando um *stack* de tecnologias **modernas e
 Para rodar o projeto localmente ou contribuir, as seguintes dependências e requisitos são necessários:
 
 * **Navegador Web Moderno:** Google Chrome, Firefox, Edge ou Safari.
-* **Acesso à API/Credenciais do Supabase:** Para interagir com o banco de dados hospedado (necessário para o funcionamento completo da aplicação).
 * **Conexão com a Internet:** Requerida para a comunicação com o serviço do Supabase.
+
+
+### ▶️ Como rodar? para rodar esta aplicação basta iniciar o index.html que se encontra nos arquivos do projeto.
 
 > 📝 **Nota:** Por ser um projeto que utiliza majoritariamente **HTML, CSS e JavaScript Vanilla**, não são necessários gerenciadores de pacotes como NPM ou ferramentas de *build* complexas para a execução básica do front-end.
 
----
-
-### 🚀 Como Contribuir
-
-*A seção "Como Contribuir" e "Instalação" seria adicionada aqui, detalhando os passos para clonar o repositório, configurar as variáveis de ambiente do Supabase e rodar o projeto localmente.*
